@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "姿势守护者",
+  "version": "0.1.0",
+  "description": "实时监测坐姿和环境光，智能提醒，保护您的健康",
+  "permissions": [
+    "storage",
+    "notifications",
+    "activeTab",
+    "tabs",
+    "windows"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.bmp",
+      "32": "assets/icons/icon32.bmp",
+      "48": "assets/icons/icon48.bmp",
+      "128": "assets/icons/icon128.bmp"
+    }
+  },
+  "options_page": "src/options/index.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/simple-test.ts"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "assets/icons/icon16.bmp",
+    "32": "assets/icons/icon32.bmp",
+    "48": "assets/icons/icon48.bmp",
+    "128": "assets/icons/icon128.bmp"
+  }
+} 

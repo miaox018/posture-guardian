@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>姿势守护者 - 设置</title>
+  <link rel="stylesheet" href="../shared/styles/globals.css" />
+  <style>
+    .settings-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .settings-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border-light);
+    }
+    
+    .settings-section {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--text-xl);
+      font-weight: var(--font-semibold);
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+    
+    .setting-item {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    
+    .setting-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .setting-label {
+      display: block;
+      font-weight: var(--font-medium);
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+    
+    .setting-description {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    
+    .setting-control {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color var(--duration-fast);
+    }
+    
+    .radio-item:hover {
+      background: var(--bg-secondary);
+    }
+    
+    .mode-card {
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all var(--duration-fast);
+    }
+    
+    .mode-card.selected {
+      border-color: var(--primary-green);
+      background: rgba(16, 185, 129, 0.05);
+    }
+    
+    .mode-title {
+      font-weight: var(--font-semibold);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .mode-description {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-container">
+    <div class="settings-header">
+      <h1>📐 姿势守护者 - 设置</h1>
+      <p>个性化您的健康监控体验</p>
+    </div>
+
+    <!-- 使用场景设置 -->
+    <div class="settings-section">
+      <h2 class="section-title">📱 使用场景设置</h2>
+      <div class="setting-item">
+        <label class="setting-label">选择您的主要使用场景</label>
+        <div class="setting-description">
+          系统将根据场景自动调整提醒策略
+        </div>
+        <div id="usage-mode-selector">
+          <div class="mode-card" data-mode="computer_work">
+            <div class="mode-title">🖥️ 电脑工作模式</div>
+            <div class="mode-description">适合办公、编程、网页浏览等场景</div>
+          </div>
+          <div class="mode-card" data-mode="study_reading">
+            <div class="mode-title">📚 学习阅读模式</div>
+            <div class="mode-description">适合看书、做作业、阅读纸质材料</div>
+          </div>
+          <div class="mode-card" data-mode="custom">
+            <div class="mode-title">⚙️ 自定义模式</div>
+            <div class="mode-description">手动配置所有提醒参数</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 提醒设置 -->
+    <div class="settings-section">
+      <h2 class="section-title">🔔 提醒设置</h2>
+      
+      <div class="setting-item">
+        <label class="setting-label">声音提醒</label>
+        <div class="setting-description">调整提醒音效和音量</div>
+        <div class="setting-control">
+          <select id="reminder-sound" class="input">
+            <option value="gentle-chime">轻柔铃声</option>
+            <option value="soft-bell">柔和钟声</option>
+            <option value="nature-ding">自然叮声</option>
+          </select>
+          <button id="test-sound" class="btn btn-secondary">试听</button>
+        </div>
+        <div style="margin-top: 12px;">
+          <label>音量：</label>
+          <input type="range" id="reminder-volume" min="0" max="100" value="30" style="width: 200px;">
+          <span id="volume-display">30%</span>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label">提醒时机</label>
+        <div class="setting-description">调整检测间隔和冷却时间</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <label>检测间隔：</label>
+            <select id="detection-interval" class="input">
+              <option value="2">2秒</option>
+              <option value="5" selected>5秒</option>
+              <option value="10">10秒</option>
+            </select>
+          </div>
+          <div>
+            <label>冷却时间：</label>
+            <select id="cooldown-period" class="input">
+              <option value="3">3分钟</option>
+              <option value="5" selected>5分钟</option>
+              <option value="10">10分钟</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label">提醒延迟设置</label>
+        <div class="setting-description">配置检测到坏姿势后多久开始提醒</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <label>第一次提醒延迟：</label>
+            <select id="first-warning-delay" class="input">
+              <option value="3">3秒</option>
+              <option value="5" selected>5秒</option>
+              <option value="10">10秒</option>
+            </select>
+          </div>
+          <div>
+            <label>第二次提醒延迟：</label>
+            <select id="second-warning-delay" class="input">
+              <option value="3">3秒</option>
+              <option value="5" selected>5秒</option>
+              <option value="10">10秒</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 高级设置 -->
+    <div class="settings-section">
+      <h2 class="section-title">⚙️ 高级设置</h2>
+      
+      <div class="setting-item">
+        <label class="setting-label">
+          <input type="checkbox" id="enable-light-detection" checked>
+          启用环境光检测
+        </label>
+        <div class="setting-description">
+          在开始监控前检查环境光线是否充足
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label">
+          <input type="checkbox" id="confirm-mode-switch" checked>
+          模式切换确认
+        </label>
+        <div class="setting-description">
+          系统检测到模式切换时显示确认通知
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label">姿势检测敏感度</label>
+        <div class="setting-description">调整检测的敏感程度</div>
+        <div>
+          <input type="range" id="posture-sensitivity" min="1" max="10" value="5" style="width: 200px;">
+          <span id="sensitivity-display">中等</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="settings-section">
+      <div style="display: flex; gap: 16px; justify-content: center;">
+        <button id="save-settings" class="btn btn-primary">保存设置</button>
+        <button id="reset-settings" class="btn btn-secondary">恢复默认</button>
+        <button id="export-data" class="btn btn-secondary">导出数据</button>
+      </div>
+    </div>
+
+    <!-- 关于信息 -->
+    <div class="settings-section">
+      <h2 class="section-title">❓ 关于</h2>
+      <div style="text-align: center; color: var(--text-secondary);">
+        <p>姿势守护者 v0.1.0</p>
+        <p>智能姿势监控，守护您的健康</p>
+        <p style="margin-top: 16px; font-size: var(--text-sm);">
+          所有检测均在本地进行，保护您的隐私
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./index.ts"></script>
+</body>
+</html> 

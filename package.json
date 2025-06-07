@@ -1,0 +1,48 @@
+{
+  "name": "posture-guardian",
+  "version": "0.1.0",
+  "description": "实时监测坐姿并给予友好提醒的Chrome扩展",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "jest",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@tensorflow/tfjs": "^4.10.0",
+    "@mediapipe/pose": "^0.5.1675469404",
+    "zustand": "^4.4.1",
+    "clsx": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@types/chrome": "^0.0.243",
+    "@types/node": "^20.5.1",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "@crxjs/vite-plugin": "^2.0.0-beta.19",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "jest": "^29.6.2",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/jest-dom": "^5.17.0"
+  },
+  "keywords": [
+    "chrome-extension",
+    "posture",
+    "health",
+    "ai",
+    "mediapipe"
+  ],
+  "author": "Posture Guardian Team",
+  "license": "MIT"
+} 

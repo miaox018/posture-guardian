@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姿势守护者 - Content Script 测试页面</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        .status.success { background: #d1fae5; color: #065f46; }
+        .status.error { background: #fee2e2; color: #991b1b; }
+        .status.warning { background: #fef3c7; color: #92400e; }
+        pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px 10px 0;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-card">
+        <h1>🧪 姿势守护者 - Content Script 测试页面</h1>
+        <p>此页面用于验证Content Script是否正确注入和执行。</p>
+        
+        <div id="status" class="status warning">
+            📡 等待Content Script注入...
+        </div>
+        
+        <div>
+            <button onclick="checkConsole()">📊 检查Console日志</button>
+            <button onclick="testExtension()">🔧 测试扩展功能</button>
+            <button onclick="manualCheck()">🔍 手动检查</button>
+            <button onclick="clearLogs()">🧹 清空日志</button>
+        </div>
+        
+        <h3>📋 检查清单</h3>
+        <div id="checklist">
+            <div>✅ 页面已加载</div>
+            <div id="script-check">⏳ 等待Content Script...</div>
+            <div id="console-check">⏳ 等待Console日志...</div>
+            <div id="function-check">⏳ 等待功能测试...</div>
+        </div>
+        
+        <h3>📝 实时日志</h3>
+        <pre id="logs">页面加载时间: ${new Date().toLocaleTimeString()}\n等待Content Script注入...</pre>
+    </div>
+
+    <script>
+        let logCount = 0;
+        
+        function addLog(message) {
+            const logs = document.getElementById('logs');
+            logCount++;
+            logs.textContent += `\n[${logCount}] ${new Date().toLocaleTimeString()} - ${message}`;
+            logs.scrollTop = logs.scrollHeight;
+        }
+        
+        function updateStatus(message, type = 'warning') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function checkConsole() {
+            addLog('用户手动检查Console日志');
+            updateStatus('📊 请查看Chrome DevTools Console标签页的输出', 'warning');
+        }
+        
+        function testExtension() {
+            addLog('开始测试扩展功能...');
+            
+            // 检查是否有Content Script注入
+            if (window.postureGuardianContentScript) {
+                addLog('✅ Content Script已注入');
+                addLog(`版本: ${window.postureGuardianContentScript.version}`);
+                addLog(`加载时间: ${window.postureGuardianContentScript.loadTime}`);
+                addLog(`模式: ${window.postureGuardianContentScript.mode}`);
+                document.getElementById('script-check').textContent = '✅ Content Script已注入';
+                updateStatus('🎉 Content Script工作正常！', 'success');
+            } else {
+                addLog('❌ Content Script未检测到');
+                addLog('尝试手动检查全局变量...');
+                
+                // 手动检查
+                setTimeout(() => {
+                    if (window.postureGuardianContentScript) {
+                        addLog('🔄 延迟检查成功！Content Script已注入');
+                        document.getElementById('script-check').textContent = '✅ Content Script已注入（延迟检测）';
+                        updateStatus('🎉 Content Script工作正常！（延迟检测）', 'success');
+                    } else {
+                        document.getElementById('script-check').textContent = '❌ Content Script未检测到';
+                        updateStatus('❌ Content Script未注入或执行失败', 'error');
+                        
+                        // 提供手动检查建议
+                        addLog('请在Console中执行: console.log(window.postureGuardianContentScript)');
+                    }
+                }, 2000);
+            }
+        }
+        
+        function manualCheck() {
+            addLog('执行手动检查...');
+            console.log('🔍 手动检查全局变量:', window.postureGuardianContentScript);
+            
+            if (window.postureGuardianContentScript) {
+                addLog('✅ 手动检查成功！');
+                updateStatus('🎉 Content Script确实在工作！', 'success');
+                document.getElementById('script-check').textContent = '✅ Content Script已注入（手动确认）';
+            } else {
+                addLog('❌ 手动检查仍然失败');
+                updateStatus('❌ Content Script确实未注入', 'error');
+            }
+        }
+        
+        function clearLogs() {
+            document.getElementById('logs').textContent = '日志已清空\n';
+            logCount = 0;
+            addLog('页面重新开始');
+        }
+        
+        // 页面加载完成时的检查
+        document.addEventListener('DOMContentLoaded', () => {
+            addLog('DOM加载完成');
+            
+            // 等待一下再检查Content Script
+            setTimeout(() => {
+                testExtension();
+            }, 3000);
+        });
+        
+        // 监听页面可见性变化
+        document.addEventListener('visibilitychange', () => {
+            addLog(`页面可见性变化: ${document.visibilityState}`);
+        });
+        
+        addLog('测试页面脚本已启动');
+    </script>
+</body>
+</html> 
