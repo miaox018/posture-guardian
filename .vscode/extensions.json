@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-eslint",
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-vscode.github-copilot-inline-chat",
+        "ms-vscode.vscode-json",
+        "ms-vscode.vscode-css",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-typescript-next"
+    ]
+}

@@ -1,0 +1,26 @@
+{
+  "git.enabled": true,
+  "git.path": "C:\\Program Files\\Git\\bin\\git.exe",
+  "git.autorefresh": true,
+  "git.detectSubmodules": false,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "emmet.includeLanguages": {
+    "typescript": "typescriptreact",
+    "javascript": "javascriptreact"
+  },
+  "files.associations": {
+    "*.tsx": "typescriptreact",
+    "*.ts": "typescript"
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "typescript": true,
+    "typescriptreact": true,
+    "javascript": true,
+    "javascriptreact": true
+  }
+} 
